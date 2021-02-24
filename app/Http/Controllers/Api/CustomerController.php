@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Customer;
 use Response;
+use Image;
 use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
@@ -86,15 +87,66 @@ class CustomerController extends Controller
         //
     }
 
+    public function imageStore(Request $request)
+    {
+        /* $customer = new customer();
+        $fileName = time() . '.' . $customer->getClientOriginalExtension();
+        $path = $request->file('photo')->move(public_path('/frontend/image'), $fileName);
+        $photoURL = url('/frontend/image' . $fileName);
+        return response()->json(['url' => $photoURL], 200); */
+
+        /*   $customer = new customer();
+
+        if ($request->hasFile('image')) {
+            $customer = $request->file('image');
+            $filename = time() . '.' . $customer->getClientOriginalExtension();
+            Image::make($customer)->resize(300, 300)->save(public_path('frontend/image/' . 'shefat' . $filename));
+            $customer->image = $filename;
+
+            $url =  $request->getSchemeAndHttpHost() . '/frontend/image/' . 'shefat' . $filename;
+        }
+
+
+        $customer = ['image' => $url];
+
+
+
+
+        if (Customer::firstOrCreate($url)) {
+            return response()->json([
+                'error' => 'false',
+                'customer' => $url,
+                'message' => 'Customer register successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'error' => 'true',
+                'customer' => $url,
+                'message' => 'Customer does not registered. Something went wrong.',
+                "image" => $url
+            ], 200);
+        } */
+
+        /*  if ($request->hasFile('image')) {
+            $customer = $request->file('image');
+            $filename = time() . '.' . $customer->getClientOriginalExtension();
+            Image::make($customer)->resize(300, 300)->save(public_path('frontend/image/' . 'shefat' . $filename));
+            $customer->image = $filename;
+
+            $url =  $request->getSchemeAndHttpHost() . '/frontend/image/' . 'shefat' . $filename;
+        } */
+    }
+
     public function createCustomer(Request $request)
     {
 
 
-        /* $validator = validator::make($request->all(), [
+        /*  $validator = validator::make($request->all(), [
             'first_name' => 'required|regex:/^[\p{L} ]+$/u|max:20',
             'middle_name' => 'required|regex:/^[\p{L} ]+$/u|max:15',
             'last_name' => 'required|regex:/^[\p{L} ]+$/u|max:20',
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2000',
+            // 'file' => 'required|mimes:doc,docx,pdf,txt,csv|max:2048',
             // 'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:1000',
             'age' => 'required',
             'blood_group' => 'required',
@@ -107,28 +159,32 @@ class CustomerController extends Controller
             'country' => 'required',
             'occupation' => 'required'
         ]);
-        if ($validator->fails()) {
+        /* if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
-        } */
-
-        $date = date('Y-m-d h:i:s');
-        if (isset($request->image)) {
-            $image = [
-                'image' => $request->image,
-                'updatedTime' => $date
-            ];
-        } else {
-            $image = [];
         }
 
+        if ($validator->fails()) {
 
+            return response()->json(['error' => $validator->errors()], 401);
+        }
+ */
         $date = date('Y-m-d h:i:s');
 
+        $customer = new customer();
+
+        if ($request->hasFile('image')) {
+            $customer = $request->file('image');
+            $filename = time() . '.' . $customer->getClientOriginalExtension();
+            Image::make($customer)->resize(300, 300)->save(public_path('frontend/image/' . 'shefat' . $filename));
+            $customer->image = $filename;
+
+            $url =  $request->getSchemeAndHttpHost() . '/frontend/image/' . 'shefat' . $filename;
+        }
         $customer =  [
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
             'last_name' => $request->last_name,
-            'image' => $request->image,
+            'image' => $url,
             'age' => $request->get('age'),
             'blood_group' => $request->get('blood_group'),
             'phone_number' => $request->get('phone_number'),
@@ -142,14 +198,16 @@ class CustomerController extends Controller
 
         ];
 
-        if (Customer::create($customer)) {
+        if (Customer::firstOrCreate($customer)) {
             return response()->json([
                 'error' => 'false',
+                'customer' => $customer,
                 'message' => 'Customer register successfully'
             ], 200);
         } else {
             return response()->json([
                 'error' => 'true',
+                'customer' => $customer,
                 'message' => 'Customer does not registered. Something went wrong.'
             ], 200);
         }

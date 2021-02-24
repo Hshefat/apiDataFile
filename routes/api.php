@@ -21,3 +21,5 @@ use Illuminate\Http\Request;
 
 
 Route::post('createCustomer', 'Api\CustomerController@createCustomer');
+Route::post('imageStore', 'Api\CustomerController@imageStore');
+Route::post('imageUpload', 'Api\ImageController@imageUpload');

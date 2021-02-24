@@ -161,7 +161,6 @@
                                                     <div class="">
                                                         <input required name="image" id="image" accept="image/*" type="file"
                                                             class="form-control" onchange="return previewImage(event)" />
-
                                                     </div>
 
                                                 </div>
@@ -172,7 +171,7 @@
                                                     <label>Image: </label>
                                                 </div>
                                                 <div class="form-group">
-                                                    <img id="output" width="100">
+                                                    <img id="output" width="100" height="100">
                                                 </div>
                                             </div>
                                         </div>
