@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Image;
+use App\Model\FileImage;
 use Validator;
+use  Image;
 
 class ImageController extends Controller
 {
@@ -101,21 +102,51 @@ class ImageController extends Controller
         }
 
 
-        if ($file = $request->file('file')) {
-            $path = $file->store('/frontend/image/');
-            $name = $file->getClientOriginalName();
+        $date = date('Y-m-d h:i:s');
 
-            //store your file into directory and db
-            $save = new Image();
-            $save->name = $file;
-            $save->path = $path;
-            $save->save();
+        $path = new FileImage();
 
+        if ($request->hasFile('path')) {
+            $customer = $request->file('path');
+            $filename = time() . '.' . $customer->getClientOriginalExtension();
+            Image::make($customer)->resize(300, 300)->save(public_path('frontend/image/' . 'shefat' . $filename));
+            $customer->path = $filename;
+
+            $url =  $request->getSchemeAndHttpHost() . '/frontend/image/' . 'shefat' . $filename;
+
+            $path = [
+                'name' => $request->name,
+                'path' => $url
+            ];
+        }
+
+        /*    $path = $request->input('path');
+        if (isset($request['path'])) {
+            $path = trim($path) . $request['path']->clientExtension();
+            $uid = uniqid();
+            $path = $uid . '-shefat-img.' . $path;
+            $request['path']->move(public_path('/frontend/image/'), $path);
+            $url = $request->getSchemeAndHttpHost() . '/frontend/image/'  . $path;
+            $path = [
+                'name' => $request->name,
+                'path' => $url
+            ]; */
+
+        //return response()->json(['downloadUrl'=>$url],200);
+        if (FileImage::firstOrCreate($path)) {
             return response()->json([
-                "success" => true,
-                "message" => "File successfully uploaded",
-                "file" => $file
-            ]);
+                'error' => 'false',
+                'message' => 'File uploaded successfully',
+                'image' => $url
+            ], 200);
+        } else {
+            return response()->json(['error' => 'true', 'message' => 'File uploaded unsuccess'], 201);
         }
     }
+
+
+    // return "upload success fully";
+
+
+
 }
