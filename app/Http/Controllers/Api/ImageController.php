@@ -115,7 +115,7 @@ class ImageController extends Controller
             $url =  $request->getSchemeAndHttpHost() . '/frontend/image/' . 'shefat' . $filename;
 
             $path = [
-                'name' => $request->name,
+                // 'name' => $request->name,
                 'path' => $url
             ];
         }

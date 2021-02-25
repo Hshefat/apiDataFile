@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2021 at 12:28 PM
+-- Generation Time: Feb 25, 2021 at 05:39 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.3.18
 
@@ -56,18 +56,10 @@ CREATE TABLE `customers` (
 
 CREATE TABLE `file_images` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `path` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `file_images`
---
-
-INSERT INTO `file_images` (`id`, `name`, `path`, `created_at`, `updated_at`) VALUES
-(6, 'name', 'http://127.0.0.1:8000/frontend/image/shefat1614165883.jpg', '2021-02-24 05:24:44', '2021-02-24 05:24:44');
 
 -- --------------------------------------------------------
 
@@ -87,10 +79,10 @@ CREATE TABLE `migrations` (
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (32, '2021_02_23_095112_create_images_table', 1),
-(34, '2014_10_12_000000_create_users_table', 2),
-(35, '2014_10_12_100000_create_password_resets_table', 2),
-(36, '2021_02_17_050610_create_customers_table', 2),
-(37, '2021_02_24_103057_create_file_images_table', 2);
+(38, '2014_10_12_000000_create_users_table', 2),
+(39, '2014_10_12_100000_create_password_resets_table', 2),
+(40, '2021_02_17_050610_create_customers_table', 2),
+(41, '2021_02_24_103057_create_file_images_table', 2);
 
 -- --------------------------------------------------------
 
@@ -170,13 +162,13 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `file_images`
 --
 ALTER TABLE `file_images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `users`

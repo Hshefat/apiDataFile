@@ -9,7 +9,8 @@ class FileImage extends Model
     protected $table = 'file_images';
     protected $fillable = [
 
-        'name', 'path'
+        // 'name',
+        'path'
     ];
     public $timestamp = false;
 }
